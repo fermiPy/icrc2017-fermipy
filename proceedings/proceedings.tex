@@ -79,19 +79,19 @@
 %        E-mail: \email{...}}
 
 \abstract{  
-  Fermipy is an open-source python framework that facilitates analysis
-  of data collected by the Fermi Large Area Telescope (LAT). Fermipy
-  is built on the Fermi Science Tools, the publicly available software
-  suite provided by NASA for the LAT mission. Fermipy provides a
+  {\fermipy} is an open-source python framework that facilitates analysis
+  of data collected by the {\Fermi} Large Area Telescope (LAT). {\fermipy}
+  is built on the {\Fermi} {\stools}, the publicly available software
+  suite provided by NASA for the LAT mission. {\fermipy} provides a
   high-level interface for analyzing LAT data in a simple and
   reproducible way. The current feature set includes methods for
   extracting spectral energy distributions and lightcurves, generating
   test statistic maps, finding new source candidates, and fitting
-  source position and extension. Fermipy leverages functionality from
+  source position and extension. {\fermipy} leverages functionality from
   other scientific python packages including NumPy, SciPy, Matplotlib,
   and Astropy and is organized as a community-developed package
   following an open-source development model. We review the current
-  functionality of Fermipy and plans for future development.}
+  functionality of {\fermipy} and plans for future development.}
 
 \FullConference{35th International Cosmic Ray Conference -ICRC217-\\
 		10-20 July, 2017\\
@@ -116,12 +116,9 @@ The {\Fermi} Large Area Telescope (LAT) is a pair-conversion telescope
 that is sensitive to gamma rays from below 20 MeV to more than 300
 GeV.  Since the launch of the {\Fermi} observatory in June 2008, the
 LAT has operated primarily in all-sky survey mode and has now
-collected more than eight years of data.
-%The LAT has been in continuous operation since its launch in
-%June 2008 and has now collected more than eight years of data
-%in all-sky survey mode.  
-LAT data classified as photon-like (satisfying the criteria of the
-photon event classes) are immediately released to the public
+collected more than eight years of data.  LAT data classified as
+photon-like (satisfying the criteria of the photon event classes) are
+immediately released to the public
 %LAT data are distributed to the public 
 through the LAT data
 archive\footnote{\url{https://fermi.gsfc.nasa.gov/cgi-bin/ssc/LAT/LATDataQuery.cgi}}
@@ -132,8 +129,6 @@ for the reduction and analysis of LAT data.  The {\stools} is
 primarily written in C++ but includes a python interface ({\pylike}) to
 facilitate scripting analysis in python.
 
-
-
 {\fermipy} is a python software package that provides a high-level
 interface for LAT data analysis.  {\fermipy} is based on the {\stools}
 and uses {\pylike} to interface with the underlying C++ library.
@@ -142,7 +137,7 @@ including NumPy~\cite{oliphant_guide_2006},
 Scipy~\cite{scipy}, and
 Astropy~\cite{2013A&A...558A..33A}.
 Matplotlib~\cite{Hunter:2007:MGE:1251563.1251845} is an optional
-dependency that can be used to generate analysis visualizations.
+dependency that is used to generate analysis visualizations.
 
 {\fermipy} is organized around an open-source development model and is
 available to all members of the LAT scientific community.  The
@@ -161,29 +156,37 @@ documentation.\footnote{\url{http://fermipy.readthedocs.org/}}
 
 \section{Installation}
 
-Releases of {\fermipy} are made available through both the pip and
-conda package manager tools.  Instructions for pip- and conda-based
-installation are provided in the online documentation.
-\footnote{\url{http://fermipy.readthedocs.org/en/latest/install.html}}
+Releases of {\fermipy} are made available through both the
+\href{https://pip.pypa.io/en/latest/}{pip} and
+\href{https://conda.io/docs/index.html}{conda} package management
+tools.  Instructions for pip- and conda-based installation are
+provided in the online documentation.
+\footnote{\url{http://fermipy.readthedocs.org/en/\version/install.html}}
 Both installation methods require an existing installation of
 {\stools} provided as precompiled binaries from the FSSC.  Pre-built
-Docker images containing a current release of {\fermipy}, the Fermi
-{\stools}, and Anaconda python are also provided.
+\href{https://www.docker.com}{Docker} images containing a current
+release of {\fermipy}, the Fermi {\stools}, and Anaconda python are
+also provided.
 
 \section{Analysis Workflow}\label{sec:analysis}
 
-{\fermipy} is designed around a global analysis object
-(\href{http://fermipy.readthedocs.io/en/latest/fermipy.html\#fermipy.gtanalysis.GTAnalysis}{GTAnalysis})
+{\fermipy} is designed around a global analysis state object
+(\href{http://fermipy.readthedocs.io/en/\version/fermipy.html\#fermipy.gtanalysis.GTAnalysis}{GTAnalysis})
 that manages the data and model preparation and provides a set of
 high-level analysis methods.  A user executes an analysis by composing
 a python script that creates a
-\href{http://fermipy.readthedocs.io/en/latest/fermipy.html\#fermipy.gtanalysis.GTAnalysis}{GTAnalysis}
+\href{http://fermipy.readthedocs.io/en/\version/fermipy.html\#fermipy.gtanalysis.GTAnalysis}{GTAnalysis}
 instance and calls the methods of this object to perform different
 analysis tasks.  A user starts a new analysis by first composing a
 configuration file that defines analysis parameters including the data
 selection, region-of-interest (ROI) geometry, and model specification.
-{\fermipy} uses the YAML format for its configuration files and groups
-related parameters into blocks.  A sample configuration file is shown
+{\fermipy} uses the YAML format for its configuration files and
+organizes parameters in a nested hierarchy that groups related
+parameters into sub-dictionaries (e.g. \textit{data},
+\textit{binning}, and \textit{selection}).
+%groups
+%related parameters into a nested hierarchy.  
+A sample configuration file is shown
 in Figure~\ref{fig:fermipy_config}.  Configurations can easily be
 constructed programatically with a YAML serialization and parsing
 library such as \href{http://pyyaml.org/wiki/PyYAML}{PyYAML}.
@@ -220,44 +223,47 @@ model:
 \end{figure}
 
 %The user composes an analysis script that creates a
-%\href{http://fermipy.readthedocs.io/en/latest/fermipy.html\#fermipy.gtanalysis.GTAnalysis}{GTAnalysis}
+%\href{http://fermipy.readthedocs.io/en/\version/fermipy.html\#fermipy.gtanalysis.GTAnalysis}{GTAnalysis}
 %instance and calls the methods of this object.  
 
 Figure~\ref{fig:fermipy_script} shows a sample analysis script that
-could be using in conjunction with the configuration file shown in
+could be used in conjunction with the configuration file shown in
 Figure~\ref{fig:fermipy_config}.  The configuration file sets the
 parameters used to initialize the analysis object and its path is
 passed to the analysis object constructor.  The \lstinline$setup$
 method is called to run the data and model preparation by executing
-the appropriate gt-tools: \emph{gtselect}, \emph{gtmktime},
-\emph{gtbin}, \emph{gtltcube}, \emph{gtexpcube2}, and
-\emph{gtsrcmaps}.
+the appropriate gt-tools: \emph{gtselect} (data selection),
+\emph{gtmktime} (data filtering), \emph{gtbin} (data binning),
+\emph{gtltcube} (livetime calculation), \emph{gtexpcube2} (exposure
+calculation), and \emph{gtsrcmaps} (calculation of spatial templates
+for individual model components).
 
 
 Once the analysis object is initialized, a typical analysis sequence
 involves optimizing the parameters of the background model, generating
-a TS or residual map of the region to assess the quality of the model,
-and extracting characteristics for a source of interest (flux, TS,
-spectral fit parameters, SED, etc.).  In the example script shown in
-Figure~\ref{fig:fermipy_script}, the \lstinline$optimize$ method is
-used to obtain a reasonable baseline model for the region by fitting
-the parameters of all components in the ROI.  The {\localize} and
-{\sed} methods are then used to determine the best-fit position of
-Mkn~421 and extract its spectral energy distribution (SED).  Finally
-the \lstinline$write_roi$ method is used to write the results of the
-analysis to an output file.
+a Test Statistic (TS) or residual map of the region to assess the
+quality of the model, and extracting the characteristics of a source
+of interest (flux, TS, spectral fit parameters, SED, etc.).  In the
+example script shown in Figure~\ref{fig:fermipy_script}, the
+\lstinline$optimize$ method is used to find best-fit values for the spectral parameters of all components of the model.
+%model for the
+%region by fitting the parameters of all components in the ROI.  
+The {\localize} and {\sed} methods are then used to determine the
+best-fit position of an individual source (Mkn~421) and extract its
+spectral energy distribution (SED).  Finally the \lstinline$write_roi$
+method is used to write the results of the analysis to an output file.
 
 Many of the {\fermipy} methods return a results dictionary that can be
 used for subsequent post-processing or visualization.  Results can
 also be serialized to a FITS file by passing
 \lstinline$write_fits=True$ or a numpy file by passing
-\lstinline$write_npy=True$.  The analysis state can be saved with the
+\lstinline$write_npy=True$.  The current ROI model can be saved with the
 \lstinline$write_roi$ method which generates a FITS file containing a
 table with one row per source in the ROI.  This file can be used in
 conjunction with the \lstinline$load_roi$ method to restore the
-analysis to a previous state.
+analysis object to a previous state.
 
-%http://fermipy.readthedocs.io/en/latest/output.html
+%http://fermipy.readthedocs.io/en/\version/output.html
 
 
 \smallskip
@@ -287,19 +293,19 @@ gta.write_roi('fit0')
 \section{Analysis Methods}
 
 {\fermipy} provides a number of high-level analysis methods that
-automate common analysis tasks.  The following sections provide a
-brief description of some of these methods.
+automate common analysis tasks.  The following sections provide 
+brief descriptions of some of these methods.
 
-\subsection{\href{http://fermipy.readthedocs.org/en/latest/advanced/sed.html}{sed}}
+\subsection{\href{http://fermipy.readthedocs.org/en/\version/advanced/sed.html}{sed}}
 
-The {\sed} method computes the spectral energy distribution (SED) of a
-source in the ROI model.  The first argument is the name of a source
-component.  Optional arguments can be provided to control energy
-binning and how nearby background sources will be handled in the fit.
-The SED is computed by replacing the spectral model of the source with
-a power law and performing an independent fit of its normalization in
+The {\sed} method computes the SED of a source in the ROI model.  The
+only required argument is the name of a source component.  Optional
+arguments can be provided to control energy binning and the treatment
+of nuisance parameters associated with nearby background sources.  The
+SED is computed by replacing the spectral model of the source with a
+power law and performing an independent fit of its normalization in
 each analysis energy bin.  By default the method will fit the source
-normalization using a power-law with $\Gamma=2$.  The power-law index
+normalization using a power law with $\Gamma=2$.  The power-law index
 used to fit the source flux in each bin can be controlled with the
 \lstinline$bin_index$ and \lstinline$use_local_index$ parameters.
 
@@ -315,7 +321,7 @@ confidence intervals under different assumptions or re-fit the global
 spectrum using a different spectral parameterization.  The output FITS
 file is generated using the SED FITS file format documented at the
 \texttt{gamma-astro-data-formats}
-repository.\footnote{\url{https://gamma-astro-data-formats.readthedocs.io/en/latest/spectra/flux\_points/index.html}}
+repository.\footnote{\url{https://gamma-astro-data-formats.readthedocs.io}}
 
 
 
@@ -338,7 +344,7 @@ repository.\footnote{\url{https://gamma-astro-data-formats.readthedocs.io/en/lat
 
 
 
-\subsection{\href{http://fermipy.readthedocs.org/en/latest/advanced/extension.html}{extension}}
+\subsection{\href{http://fermipy.readthedocs.org/en/\version/advanced/extension.html}{extension}}
 
 \begin{figure}[t]
 \centering
@@ -367,7 +373,39 @@ extension, and errors and upper limits on the extension.
 Figure~\ref{fig:extension} shows some of the diagnostic plots
 generated by this method.
 
-\subsection{\href{http://fermipy.readthedocs.org/en/latest/advanced/tsmap.html}{tsmap}}
+\subsection{\href{http://fermipy.readthedocs.org/en/\version/advanced/localization.html}{localize}}
+
+% \begin{figure}[t]
+% \centering
+% \includegraphics[width=0.49\columnwidth]{{extsource_extension}.pdf}
+% \includegraphics[width=0.49\columnwidth]{{extsource_profile}.pdf}
+% \caption{\textit{Left:} Diagnostic plot generated by the {\extension}
+%   method showing the residual TS map of the source overplotted with
+%   the best-fit extension (green solid and dashed lines).
+%   \textit{Right:} Likelihood profile versus angular size generated by
+%   the {\extension} method.  The vertical black line and grey shaded
+%   region indicate the best-fit value and 1$\sigma$ errors on the
+%   extension.\label{fig:extension} }
+% \end{figure}
+
+The {\localize} method fits the position of a source by maximizing the
+model likelihood with respect to source position.  The method first
+computes a coarse map of the likelihood as a function of source
+position sampled with the analysis pixelization.  A second scan is
+then performed using a finer spatial sampling to refine the position
+near the peak of the likelihood surface.  The best-fit position and
+positional uncertainties are extracted by fitting a 2D
+paraboloid to the sampled likelihood values near the peak.  When the
+positional fit is complete, the model of the source is updated with
+its best-fit position.
+
+
+
+
+%Figure~\ref{fig:extension} shows some of the diagnostic plots
+%generated by this method.
+
+\subsection{\href{http://fermipy.readthedocs.org/en/\version/advanced/tsmap.html}{tsmap}}
 
 The {\tsmap} method can be used to rapidly generate a test statistic
 map of an ROI using the same algorithm as the \emph{gttsmap} tool.  A
@@ -395,30 +433,30 @@ normalization.
 \includegraphics[width=0.49\columnwidth]{{tsmap_3fgl_j0326.2+0225_hist}.pdf}
 \caption{Diagnostic plots generated by the {\tsmap} method.
   \textit{Left:} Map of the test-source test statistic versus position
-  in the ROI.  TS isocontours are shown corresponding to .
-  \textit{Right:} Histogram of TS values from the TS map.  The black
-  curve shows the expected distribution for a likelihood ratio test
-  with one degree of freedom.\label{fig:tsmap}. }
+  in the ROI.  White crosses indicate the positions of point sources
+  in the model.  \textit{Right:} Histogram of TS values from the TS
+  map.  The black curve shows the expected distribution for a
+  likelihood ratio test with one degree of
+  freedom.\label{fig:tsmap}. }
 \end{figure}
 
-\subsection{\href{http://fermipy.readthedocs.org/en/latest/advanced/detection.html}{find\_sources}}
+\subsection{\href{http://fermipy.readthedocs.org/en/\version/advanced/detection.html}{find\_sources}}
 
-The {\findsources}
-method is an iterative source-finding algorithm that identifies new
-source candidates using the likelihood ratio method.  In each
-iteration a TS map of the ROI is generated using the source model
-specified with the \lstinline$model$ argument.  Candidate sources are
-identified from the N highest peaks in the TS map (where N is set with
-the \lstinline$sources_per_iter$ parameter) that have a TS greater
-than a certain threshold (\lstinline$sqrt_ts_threshold$) and are at
-least a certain distance (\lstinline$min_separation$) from another
-peak with higher TS.  A new source is added at each peak satisfying
-these criteria with a position derived by fitting a parabola to the TS
-surface in a local patch around the source.  After each iteration a
-new TS map is generated using an updated model including the sources
-added in the last iteration.  The analysis is stopped when no
-additional source candidates are found or the number of iterations
-exceeds \lstinline$max_iter$.
+The {\findsources} method is an iterative source-finding algorithm
+that identifies new source candidates using the likelihood ratio
+method.  In each iteration a TS map of the ROI is generated using the
+test source model specified with the \lstinline$model$ argument.
+Candidate sources are identified from the N highest peaks in the TS
+map (where N is set with the \lstinline$sources_per_iter$ parameter)
+that have a TS greater than a certain threshold
+(\lstinline$sqrt_ts_threshold$) and are at least a certain distance
+(\lstinline$min_separation$) from another peak with higher TS.  A new
+source is added at each peak satisfying these criteria with a position
+derived by fitting a parabola to the TS surface near the peak.  After
+each iteration a new TS map is generated using an updated model that
+includes the sources added in the last iteration.  The analysis is
+stopped when no additional source candidates are found or the number
+of iterations exceeds the maximum set with the \lstinline$max_iter$ argument.
 
 Figure~\ref{fig:find_sources} illustrates the application of this
 method to a blended pair of sources.  The first iteration finds a
@@ -432,23 +470,34 @@ as a point source in the second iteration.
 \includegraphics[width=0.49\columnwidth]{{tsmap_iter0_pointsource_powerlaw_2.00_tsmap_sqrt_ts}.pdf}
 \includegraphics[width=0.49\columnwidth]{{tsmap_iter1_pointsource_powerlaw_2.00_tsmap_sqrt_ts}.pdf}
 \includegraphics[width=0.49\columnwidth]{{tsmap_iter2_pointsource_powerlaw_2.00_tsmap_sqrt_ts}.pdf}
-\caption{Illustration of the {\findsources} method.  The top left
-  panel shows the TS map of the ROI prior to running the method.  The
-  right and bottom panels show the TS maps obtained after the first
-  and second iterations.\label{fig:find_sources}. }
+\caption{Illustration of the {\findsources} method as applied to a
+  simulated data set with two unmodeled sources separated by
+  $\sim0.5^\circ$.  The top left panel shows the TS map of the ROI
+  prior to running the method.  The right and bottom panels show the
+  TS maps obtained after the first and second
+  iterations.\label{fig:find_sources}. }
 \end{figure}
 
 \section{Conclusions}
 
+
 The {\fermipy} package provides an end-to-end tool for high-level
-analysis of LAT data that facilitates research on a broad range of
-topics (AGN, Galactic sources, DM searches).  Although the package is
-now quite mature, development of {\fermipy} remains active.  Future
-releases will focus on the following areas:
+analysis of LAT data that facilitates the study of known gamma-ray
+source classes (Active Galactic Nuclei, Pulsars, Supernova Remnants)
+as well as searches for new gamma-ray source populations (e.g. Dark Matter
+subhalos).
+%the diverse gamma-ray source classes of both known and  
+%accessible with the LAT, e.g. Active Galactic Nuclei, Pulsars, Supernova
+%Remnants, and Dark Matter subhalos.
+% facilitates research on a broad range of
+% topics (AGN, Galactic sources, DM searches).  
+Although the package is now mature, development of {\fermipy} remains
+active.  Future releases will focus on the following areas:
 \begin{itemize}
-\item Support for analysis of data pixelized with HEALPix.
-\item Functionality for evaluating systematic uncertainties from the
-  effective area and PSF.
+\item Support for analyzing data pixelized with HEALPix.
+\item Functionality for propagating systematic uncertainties
+  associated with the instrument response functions (effective area
+  and PSF).
 \item Improved integration with other open-source gamma-ray analysis
   software such as \emph{Gammapy}~\cite{2015ICRC...34..789D},
   \emph{3ML}~\cite{2015arXiv150708343V}, and
@@ -457,8 +506,8 @@ releases will focus on the following areas:
 \item Better standardization of FITS output formats through the
   \texttt{gamma-astro-data-formats} effort.
 \end{itemize}
-We aim to make {\fermipy} a community-supported effort and on this
-basis we welcome contributions from all members of the LAT scientific
+We aim to make {\fermipy} a community-supported effort and to this end
+we welcome contributions from all members of the LAT scientific
 community.
 
 \acknowledgments
